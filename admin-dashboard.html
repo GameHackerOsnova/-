@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Панель Администратора - ArchiveHub</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="admin-page">
+  <header class="admin-header">
+    <div class="container">
+      <div class="admin-header-content">
+        <div class="logo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+            <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+            <path d="M12 8v8"></path>
+            <path d="M8 12h8"></path>
+          </svg>
+          <span>ArchiveHub - Администратор</span>
+        </div>
+        <div class="admin-nav">
+          <a href="index.html" class="nav-link">Перейти на сайт</a>
+          <button id="logout-button" class="button button-outline">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="container">
+      <div class="admin-tabs">
+        <button class="tab-button active" data-tab="categories">Категории</button>
+        <button class="tab-button" data-tab="files">Файлы</button>
+        <button class="tab-button" data-tab="stats">Статистика</button>
+      </div>
+      
+      <!-- Вкладка Категории -->
+      <div id="categories-tab" class="tab-content active">
+        <div class="admin-section-header">
+          <h2>Управление категориями</h2>
+          <button id="add-category-button" class="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+            Добавить категорию
+          </button>
+        </div>
+        
+        <div class="categories-list" id="categories-list">
+          <!-- Категории будут добавлены с помощью JavaScript -->
+        </div>
+      </div>
+      
+      <!-- Вкладка Файлы -->
+      <div id="files-tab" class="tab-content">
+        <div class="admin-section-header">
+          <h2>Управление файлами</h2>
+          <button id="add-file-button" class="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+            Добавить файл
+          </button>
+        </div>
+        
+        <div class="files-table admin-files-table">
+          <div class="files-header">
+            <div class="file-name-col">Имя файла</div>
+            <div class="file-category-col">Категория</div>
+            <div class="file-type-col">Тип</div>
+            <div class="file-size-col">Размер</div>
+            <div class="file-downloads-col">Скачивания</div>
+            <div class="file-actions-col">Действия</div>
+          </div>
+          
+          <div id="admin-files-container">
+            <!-- Файлы будут добавлены с помощью JavaScript -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Вкладка Статистика -->
+      <div id="stats-tab" class="tab-content">
+        <h2>Статистика загрузок</h2>
+        
+        <div class="stats-cards">
+          <div class="stat-card">
+            <div class="stat-title">Всего скачиваний</div>
+            <div class="stat-value" id="total-downloads">0</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-title">Всего файлов</div>
+            <div class="stat-value" id="total-files">0</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-title">Всего категорий</div>
+            <div class="stat-value" id="total-categories">0</div>
+          </div>
+        </div>
+        
+        <div class="stats-section">
+          <h3>Популярные файлы</h3>
+          <div class="popular-files" id="popular-files">
+            <!-- Будет заполнено с помощью JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Модальное окно для категории -->
+  <div class="modal" id="category-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="category-modal-title">Добавить категорию</h3>
+        <button class="close-button" id="close-category-modal">×</button>
+      </div>
+      <form id="category-form">
+        <input type="hidden" id="category-id">
+        <div class="form-group">
+          <label for="category-name">Название</label>
+          <input type="text" id="category-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="category-description">Описание</label>
+          <textarea id="category-description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="button button-outline" id="cancel-category">Отмена</button>
+          <button type="submit" class="button" id="save-category">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модальное окно для файла -->
+  <div class="modal" id="file-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="file-modal-title">Добавить файл</h3>
+        <button class="close-button" id="close-file-modal">×</button>
+      </div>
+      <form id="file-form" enctype="multipart/form-data">
+        <input type="hidden" id="file-id">
+        <div class="form-group">
+          <label for="file-name">Название</label>
+          <input type="text" id="file-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="file-description">Описание</label>
+          <textarea id="file-description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="file-category">Категория</label>
+          <select id="file-category" name="categoryId" required>
+            <!-- Будет заполнено с помощью JavaScript -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="file-upload">Файл (RAR, ZIP, 7Z)</label>
+          <input type="file" id="file-upload" name="file" accept=".rar,.zip,.7z">
+          <div class="form-hint">Максимальный размер: 50MB</div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="button button-outline" id="cancel-file">Отмена</button>
+          <button type="submit" class="button" id="save-file">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Подтверждение удаления -->
+  <div class="modal" id="confirm-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Подтверждение удаления</h3>
+        <button class="close-button" id="close-confirm-modal">×</button>
+      </div>
+      <div class="confirm-body">
+        <p id="confirm-message">Вы уверены, что хотите удалить этот элемент?</p>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="button button-outline" id="cancel-delete">Отмена</button>
+        <button type="button" class="button button-danger" id="confirm-delete">Удалить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
